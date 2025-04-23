@@ -1,51 +1,31 @@
-# Background info 
-Reverse Engineering a Web application. 
+# Endpoint Explorer
+By Timothy Kennedy & Quinton Tracey
 
-Let us create a math format for the problem we want to resolve. Denote the web application under reverse engineering as a function $f(x)$ in which an instance of $x$ is an API. Denote the complete set of APIs for a particular $f$ as $\Alpha$. We may know a subset of $\Alpha$. The task is to implement an automated method to  find the complete $\Alpha$ or at least increase the size of the known API set. 
+### The Problem
+Web applications are growing in complexity and understanding their behaviour is critical for developers
 
-## Related tools/projects
-- MITMProxy2Swagger: https://github.com/alufers/mitmproxy2swagger 
-- POSTMAN: https://www.postman.com
-- Zaproxy: https://github.com/zaproxy/zaproxy
-- Restler-fuzzer: https://github.com/microsoft/restler-fuzzer?tab=readme-ov-file
-- Katana: https://github.com/projectdiscovery/katana
-- LinkFinder https://github.com/GerbenJavado/LinkFinder
-- FFUF https://github.com/ffuf/ffuf
-- https://zenodo.org/records/7702754 https://arxiv.org/pdf/2208.09505 (related by very different perspective using metamorphic testing)
-- https://www.usenix.org/system/files/sec24summer-prepub-198-stafeev.pdf (an up-to-date survey of crawlers)
+### Our Motivation
+Existing analysis tools can be blocked, lack interactivity or don’t display information intuitively
 
-## Tentative features to be delivered by the project
-- discover undocumented APIs
-- discover the business logic via the APIs discovered.
-- Orchestrate the API calls to automate a user journey
+### Our Objective
 
-## Tentative work items - based on the known info of the target web app
-1. All the APIs are fully known (this is the strongest assumption): orchestrate sequences of API calls to simulate a user. The component for compiling APIs specs into python calls in Restler-fuzzer can be borrowed or reused.
-2. APIs are unknown but web traffic can be captured in the client side such as a HAR file: leverage tools such as MITMProxy2Swagger to build API specs and it falls back to case 1 if ```all``` APIs can be found. This is untrue for most of cases.
-3. In most cases and the most difficult case we only know part of APIs either via public API specs or from traffic. We need to create new methods to obtain more API specs. It is a task similar to fuzzing but with a much larger space to search. 
+## Basic Spiel 
+Reverse engineering is the process of understanding how a system works by carefully examining its structure and behavior. In the internet age, web apps are growing in complexity, and understanding their behaviour is critical for developers. The existing tools we have tested fell short in this respect - some get blocked by websites, others lack interactivity, and many don't present insights in an intuitive way, limiting the useful information we can derive from websites. Our goal is to build a tool that streamlines the reverse engineering process by transforming natural user interactions with a website into key insights about the API.
 
-# The team
-We operate to build a Minimal Viable Product. Imagine we are 4 friends trying to build something that can lead to a product. 
+Introducing Endpoint Explorer, a tool designed to bridge the gap between complexity and usability. It works by parsing recorded interactions with a website into a beginner-friendly visualization that allows for viewing advanced information when needed. The user can modify the recorded interactions and replay them to simulate a user performing those actions on the target web application for testing or debugging behaviours. The customized interactions can be saved or exported into other formats for use among other systems. Now Lets see a quick demo to see it in action.
 
-The team is supposed to be cross-functional. 
-- The project mentors: as like a product owner. Their responsibilities include: defining product features and providing suggestions/guidance on technical and non-technical issues
-- Each of the students work like an individual contributor in a team in an enterprise setting. Most of the impelmentations will be done by the students.
+## Technologies Leveraged
+- Main Language, C#
+- UI Framework, Uno Platform 
+- Main C# libraries leveraged, Newtonsoft.Json​ & Flurl.Http
 
-So we need sufficient motivation to keep working.
-What motivate us? 
+## Possible Future Extensions
+- Hidden Endpoint Discovery, the ability to discover APIs not directly interacted with​
+>Could use existing fuzzing techniques​
 
-# Meeting notes
-## Sept 20 action item:
-1. Implemement: Record and Replay
-To build an end-to-end scenario in which it will automate the following: 
-- Capture the http traffic (the user needs to manually interact with the target app - login, post etc.)
-- Derive the API specs
-- Orchestrate sequences of calls. And these sequences are user journey. 
-Question: to what extend could the tool reproduce results consistently over different target apps? Would it work against apps with Bot detection enabled? 
+- Automated interaction collection, further reduction of human effort through automatic collection of HAR file information​
+>Train an AI model to interact with websites​
 
-2. Test against 20 web apps, percentage of apps can be record-n-replay? 
-
-3. Compare and contrast of existing tools/projects
-
-Note: C# is to be considered by the team. 
+- Enhanced Analytics, get further insights through patterns found​
+>Having an interface element to chat with an AI about the extracted information using Retrieval Augmented Generation (RAG)
 
